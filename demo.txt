@@ -1,0 +1,11 @@
+make -C /lib/modules/5.10.103-v7l+/build M=/home/pi/Projects/linux_kernel/sensor_driver_kernel modules
+make[1]: Entering directory '/usr/src/linux-headers-5.10.103-v7l+'
+make[1]: Leaving directory '/usr/src/linux-headers-5.10.103-v7l+'
+print kernel messages when hello_kernel is not yet inserted
+print kernel messages when hello_kernel is inserted
+[  683.096840] Hello Kernel
+print active kernel modules containing keyword hello
+hello_kernel           16384  0
+print kernel messages when hello_kernel is removed
+[  683.096840] Hello Kernel
+[  683.150176] Goodbye Kernel
