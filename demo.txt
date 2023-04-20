@@ -2,3 +2,13 @@ make -C /lib/modules/5.15.0-1024-raspi/build M=/home/pi/git/sensor_driver_kernel
 make[1]: Entering directory '/usr/src/linux-headers-5.15.0-1024-raspi'
 make[1]: Leaving directory '/usr/src/linux-headers-5.15.0-1024-raspi'
 print kernel messages when hello_kernel is not yet inserted
+print kernel messages when hello_kernel is inserted
+[ 1999.773409] OLED Probed!!!
+[ 1999.773662] Driver Added!!!
+print active kernel modules containing keyword hello
+hello_kernel           16384  0
+print kernel messages when hello_kernel is removed
+[ 1999.773409] OLED Probed!!!
+[ 1999.773662] Driver Added!!!
+[ 2000.142771] OLED Removed!!!
+[ 2000.143131] Driver Removed!!!
