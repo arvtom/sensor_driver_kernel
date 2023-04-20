@@ -1,12 +1,21 @@
 make -C /lib/modules/5.15.0-1024-raspi/build M=/home/pi/git/sensor_driver_kernel modules
 make[1]: Entering directory '/usr/src/linux-headers-5.15.0-1024-raspi'
-  CC [M]  /home/pi/git/sensor_driver_kernel/hello_kernel.o
-  MODPOST /home/pi/git/sensor_driver_kernel/Module.symvers
-  CC [M]  /home/pi/git/sensor_driver_kernel/hello_kernel.mod.o
-  LD [M]  /home/pi/git/sensor_driver_kernel/hello_kernel.ko
 make[1]: Leaving directory '/usr/src/linux-headers-5.15.0-1024-raspi'
 print kernel messages when hello_kernel is not yet inserted
 print kernel messages when hello_kernel is inserted
+[  169.819129] hello_kernel: loading out-of-tree module taints kernel.
+[  169.819287] hello_kernel: module verification failed: signature and/or required key missing - tainting kernel
+[  169.820269] Hello Kernel
+[  169.820941] ret0=-121, tx=64
+[  169.820953] ret1=-121, rx1=0
+[  169.820959] ret2=-121, rx2=0
 print active kernel modules containing keyword hello
 hello_kernel           16384  0
 print kernel messages when hello_kernel is removed
+[  169.819129] hello_kernel: loading out-of-tree module taints kernel.
+[  169.819287] hello_kernel: module verification failed: signature and/or required key missing - tainting kernel
+[  169.820269] Hello Kernel
+[  169.820941] ret0=-121, tx=64
+[  169.820953] ret1=-121, rx1=0
+[  169.820959] ret2=-121, rx2=0
+[  169.933164] Goodbye Kernel
