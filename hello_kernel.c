@@ -32,7 +32,6 @@ static int __init my_init(void)
 
     return 0;
 }
-module_init(my_init);
 
 /*
 static int __init my_init(void)
@@ -43,7 +42,7 @@ static int __init my_init(void)
     printk("Hello Kernel\n");
     
     return 0;
-}
+}*/
 
 static void __exit my_deinit(void)
 {
@@ -51,4 +50,4 @@ static void __exit my_deinit(void)
 }
 
 module_init(my_init);
-module_exit(my_deinit);*/
+module_exit(my_deinit);
