@@ -99,6 +99,9 @@ static int __init my_init(void)
 
 static void __exit my_deinit(void)
 {
+    i2c_unregister_device(etx_i2c_client_oled);
+    i2c_del_driver(&etx_oled_driver);
+    
     printk("Goodbye Kernel\n");
 }
 
