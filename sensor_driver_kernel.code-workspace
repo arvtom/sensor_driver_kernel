@@ -12,7 +12,9 @@
 	],
 	"settings": {
 		"files.associations": {
-			"i2c.h": "c"
+			"i2c.h": "c",
+			"module.h": "c",
+			"delay.h": "c"
 		}
 	}
 }
