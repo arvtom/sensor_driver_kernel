@@ -17,28 +17,28 @@
 
 MODULE_LICENSE("GPL");
  
-#define I2C_BUS_AVAILABLE   (1)             // I2C Bus available in our Raspberry Pi
-#define SLAVE_DEVICE_NAME   ("pcf8591")     // Device and Driver Name
-#define SSD1306_SLAVE_ADDR  (0x48)          // PCF8591 Slave Address
+#define I2C_BUS             (1)             // I2C Bus available in our Raspberry Pi
+#define SLAVE_NAME          ("pcf8591")     // Device and Driver Name
+#define SLAVE_ADDRESS       (0x48)
  
-static struct i2c_adapter *etx_i2c_adapter     = NULL;  // I2C Adapter Structure
-static struct i2c_client  *etx_i2c_client_oled = NULL;  // I2C Cient Structure 
-static const struct i2c_device_id etx_oled_id[] = 
+static struct i2c_adapter *s_i2c_adapter = NULL;
+static struct i2c_client  *s_i2c_client = NULL;
+static const struct i2c_device_id s_i2c_device_id[] = 
 {
-    { SLAVE_DEVICE_NAME, 0 },
+    { SLAVE_NAME, 0 },
     { }
 };
-static struct i2c_board_info oled_i2c_board_info = 
+static struct i2c_board_info s_i2c_board_info = 
 {
-    I2C_BOARD_INFO(SLAVE_DEVICE_NAME, SSD1306_SLAVE_ADDR)
+    I2C_BOARD_INFO(SLAVE_NAME, SLAVE_ADDRESS)
 };
 
-MODULE_DEVICE_TABLE(i2c, etx_oled_id);
+MODULE_DEVICE_TABLE(i2c, s_i2c_device_id);
 
 /**
 * \brief Slave found callback
 */
-static int etx_oled_probe(struct i2c_client *client,
+static int slave_found_callback(struct i2c_client *client,
                          const struct i2c_device_id *id)
 {
     
@@ -49,8 +49,8 @@ static int etx_oled_probe(struct i2c_client *client,
     //perhaps delay will be needed for i2c peripheral or pcf8591 to settle
     msleep(100);
 
-    ret = i2c_master_recv(etx_i2c_client_oled, &buf_rx_i2c, 1);
-    ret = i2c_master_send(etx_i2c_client_oled, &buf_tx_i2c, 1);
+    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+    ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
     
     pr_info("OLED Probed!!!\n");
     
@@ -60,23 +60,23 @@ static int etx_oled_probe(struct i2c_client *client,
 /**
 * \brief Slave removed callback
 */
-static int etx_oled_remove(struct i2c_client *client)
+static int slave_removed_callback(struct i2c_client *client)
 {   
     pr_info("OLED Removed!!!\n");
     
     return 0;
 }
 
-static struct i2c_driver etx_oled_driver = 
+static struct i2c_driver s_i2c_driver = 
 {
     .driver = 
     {
-        .name   = SLAVE_DEVICE_NAME,
+        .name   = SLAVE_NAME,
         .owner  = THIS_MODULE,
     },
-    .probe          = etx_oled_probe,
-    .remove         = etx_oled_remove,
-    .id_table       = etx_oled_id,
+    .probe          = slave_found_callback,
+    .remove         = slave_removed_callback,
+    .id_table       = s_i2c_device_id,
 };
  
 /**
@@ -86,19 +86,19 @@ static int __init etx_driver_init(void)
 {
     int ret = -1;
 
-    etx_i2c_adapter     = i2c_get_adapter(I2C_BUS_AVAILABLE);
+    s_i2c_adapter = i2c_get_adapter(I2C_BUS);
     
-    if( etx_i2c_adapter != NULL )
+    if (s_i2c_adapter != NULL)
     {
-        etx_i2c_client_oled = i2c_new_client_device(etx_i2c_adapter, &oled_i2c_board_info);
+        s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
         
-        if( etx_i2c_client_oled != NULL )
+        if (s_i2c_client != NULL )
         {
-            i2c_add_driver(&etx_oled_driver);
+            i2c_add_driver(&s_i2c_driver);
             ret = 0;
         }
         
-        i2c_put_adapter(etx_i2c_adapter);
+        i2c_put_adapter(s_i2c_adapter);
     }
     
     pr_info("Driver Added!!!\n");
@@ -111,8 +111,8 @@ static int __init etx_driver_init(void)
 */
 static void __exit etx_driver_exit(void)
 {
-    i2c_unregister_device(etx_i2c_client_oled);
-    i2c_del_driver(&etx_oled_driver);
+    i2c_unregister_device(s_i2c_client);
+    i2c_del_driver(&s_i2c_driver);
     pr_info("Driver Removed!!!\n");
 }
  
