@@ -29,6 +29,17 @@ static struct i2c_client  *etx_i2c_client_oled = NULL;  // I2C Cient Structure
 static int etx_oled_probe(struct i2c_client *client,
                          const struct i2c_device_id *id)
 {
+    
+    unsigned char buf_rx_i2c = 0x00;
+    unsigned char buf_tx_i2c = 0xAF;
+    int ret = 0;
+    
+    //perhaps delay will be needed for i2c peripheral or pcf8591 to settle
+    msleep(100);
+
+    ret = i2c_master_recv(etx_i2c_client_oled, &buf_rx_i2c, 1);
+    ret = i2c_master_send(etx_i2c_client_oled, &buf_tx_i2c, 1);
+    
     pr_info("OLED Probed!!!\n");
     
     return 0;
@@ -81,8 +92,6 @@ static struct i2c_board_info oled_i2c_board_info = {
 static int __init etx_driver_init(void)
 {
     int ret = -1;
-    unsigned char buf_rx_i2c = 0x00;
-    unsigned char buf_tx_i2c = 0xAF;
 
     etx_i2c_adapter     = i2c_get_adapter(I2C_BUS_AVAILABLE);
     
@@ -100,12 +109,6 @@ static int __init etx_driver_init(void)
     }
     
     pr_info("Driver Added!!!\n");
-
-    //perhaps delay will be needed for i2c peripheral or pcf8591 to settle
-    //msleep(100);
-
-    ret = i2c_master_recv(etx_i2c_client_oled, &buf_rx_i2c, 1);
-    ret = i2c_master_send(etx_i2c_client_oled, &buf_tx_i2c, 1);
 
     return ret;
 }
