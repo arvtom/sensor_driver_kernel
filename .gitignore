@@ -50,3 +50,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+sensor_driver_kernel.code-workspace
+.vscode/c_cpp_properties.json
