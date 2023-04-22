@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../lib/modules/5.15.0-1024-raspi/build/include"
+		},
+		{
+			"path": "../../../../lib/modules/5.15.0-1024-raspi/build/include/linux"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"i2c.h": "c"
+		}
+	}
+}
