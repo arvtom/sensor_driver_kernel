@@ -16,12 +16,34 @@
 #include <linux/kernel.h>
  
 #define I2C_BUS_AVAILABLE   (1)             // I2C Bus available in our Raspberry Pi
-#define SLAVE_DEVICE_NAME   ("PCF8591")     // Device and Driver Name
+#define SLAVE_DEVICE_NAME   ("pcf8591")     // Device and Driver Name
 #define SSD1306_SLAVE_ADDR  (0x48)          // PCF8591 Slave Address
  
 static struct i2c_adapter *etx_i2c_adapter     = NULL;  // I2C Adapter Structure
 static struct i2c_client  *etx_i2c_client_oled = NULL;  // I2C Cient Structure 
- 
+static const struct i2c_device_id etx_oled_id[] = 
+{
+    { SLAVE_DEVICE_NAME, 0 },
+    { }
+};
+static struct i2c_driver etx_oled_driver = 
+{
+    .driver = 
+    {
+        .name   = SLAVE_DEVICE_NAME,
+        .owner  = THIS_MODULE,
+    },
+    .probe          = etx_oled_probe,
+    .remove         = etx_oled_remove,
+    .id_table       = etx_oled_id,
+};
+static struct i2c_board_info oled_i2c_board_info = 
+{
+    I2C_BOARD_INFO(SLAVE_DEVICE_NAME, SSD1306_SLAVE_ADDR)
+};
+
+MODULE_DEVICE_TABLE(i2c, etx_oled_id);
+
 /*
 ** This function getting called when the slave has been found
 ** Note : This will be called only once when we load the driver.
@@ -55,36 +77,6 @@ static int etx_oled_remove(struct i2c_client *client)
     
     return 0;
 }
- 
-/*
-** Structure that has slave device id
-*/
-static const struct i2c_device_id etx_oled_id[] = {
-        { SLAVE_DEVICE_NAME, 0 },
-        { }
-};
-
-MODULE_DEVICE_TABLE(i2c, etx_oled_id);
- 
-/*
-** I2C driver Structure that has to be added to linux
-*/
-static struct i2c_driver etx_oled_driver = {
-        .driver = {
-            .name   = SLAVE_DEVICE_NAME,
-            .owner  = THIS_MODULE,
-        },
-        .probe          = etx_oled_probe,
-        .remove         = etx_oled_remove,
-        .id_table       = etx_oled_id,
-};
- 
-/*
-** I2C Board Info strucutre
-*/
-static struct i2c_board_info oled_i2c_board_info = {
-        I2C_BOARD_INFO(SLAVE_DEVICE_NAME, SSD1306_SLAVE_ADDR)
-    };
  
 /*
 ** Module Init function
@@ -125,8 +117,3 @@ static void __exit etx_driver_exit(void)
  
 module_init(etx_driver_init);
 module_exit(etx_driver_exit);
- 
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("EmbeTronicX <embetronicx@gmail.com>");
-MODULE_DESCRIPTION("Simple I2C driver explanation (SSD_1306 OLED Display Interface)");
-MODULE_VERSION("1.34");
