@@ -28,6 +28,7 @@ MODULE_LICENSE("GPL");
 static struct timer_list etx_timer;
 static unsigned int count = 0;
 
+bool b_flag_i2c_probe = false;
 static struct i2c_adapter *s_i2c_adapter = NULL;
 static struct i2c_client  *s_i2c_client = NULL;
 static const struct i2c_device_id s_i2c_device_id[] = 
@@ -49,31 +50,11 @@ static int pcf8591_probe_callback(struct i2c_client *client,
                          const struct i2c_device_id *id)
 {
     pr_info("pcf8591 probe callback\n");
-
-    unsigned char buf_rx_i2c = 0x00;
-    unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
-    int ret = 0;
     
-    //perhaps delay will be needed for i2c peripheral or pcf8591 to settle
+    //delay is needed for i2c peripheral
     msleep(100);
+    b_flag_i2c_probe = true;
 
-    pr_info("config pcf control register\n");
-    ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
-
-    pr_info("read data sample\n");
-    /* Read two data samples because pcf8591 has to settle */
-    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-
-    /*while (true)
-    {
-        ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-        //pr_info("buf_rx_i2c=%x\n, buf_rx_i2c");
-        printk("buf_rx_i2c=%x\n", buf_rx_i2c);
-
-        msleep(1000);
-    }*/
-    
     return 0;
 }
  
@@ -102,8 +83,22 @@ static struct i2c_driver s_i2c_driver =
 //Timer Callback function. This will be called when timer expires
 void timer_callback(struct timer_list * data)
 {
-    /* do your timer stuff here */
     pr_info("Timer Callback function Called [%d]\n",count++);
+
+    if (true == b_flag_i2c_probe)
+    {
+        unsigned char buf_rx_i2c = 0x00;
+        unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
+        int ret = 0;
+
+        pr_info("config pcf control register\n");
+        ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
+
+        pr_info("read data sample\n");
+        /* Read two data samples because pcf8591 has to settle */
+        // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+        // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+    }
     
     /*
        Re-enable timer. Because this function will be called only first time. 
