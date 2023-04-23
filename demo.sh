@@ -5,7 +5,7 @@ sudo dmesg -C
 sudo insmod pcf8591.ko
 
 #pause bash script (seconds)
-read -t 1
+read -t 10
 
 #remove kernel module
 sudo rmmod pcf8591
