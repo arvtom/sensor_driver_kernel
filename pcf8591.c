@@ -14,19 +14,19 @@
 #include <linux/i2c.h>
 #include <linux/delay.h>
 #include <linux/kernel.h>
-#include <linux/timer.h>
-#include <linux/jiffies.h>
+// #include <linux/timer.h>
+// #include <linux/jiffies.h>
 
 MODULE_LICENSE("GPL");
  
-#define TIMEOUT 1000    //milliseconds
+// #define TIMEOUT 1000    //milliseconds
 
 #define I2C_BUS             (1)             // I2C Bus available in our Raspberry Pi
 #define SLAVE_NAME          ("pcf8591")     // Device and Driver Name
 #define SLAVE_ADDRESS       (0x48)
 
-static struct timer_list etx_timer;
-static unsigned int count = 0;
+// static struct timer_list etx_timer;
+// static unsigned int count = 0;
 
 bool b_flag_i2c_probe = false;
 static struct i2c_adapter *s_i2c_adapter = NULL;
@@ -81,31 +81,31 @@ static struct i2c_driver s_i2c_driver =
 };
 
 //Timer Callback function. This will be called when timer expires
-void timer_callback(struct timer_list * data)
-{
-    pr_info("Timer Callback function Called [%d]\n",count++);
+// void timer_callback(struct timer_list * data)
+// {
+//     pr_info("Timer Callback function Called [%d]\n",count++);
 
-    if (true == b_flag_i2c_probe)
-    {
-        unsigned char buf_rx_i2c = 0x00;
-        unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
-        int ret = 0;
+//     if (true == b_flag_i2c_probe)
+//     {
+//         unsigned char buf_rx_i2c = 0x00;
+//         unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
+//         int ret = 0;
 
-        pr_info("config pcf control register\n");
-        ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
+//         pr_info("config pcf control register\n");
+//         ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
 
-        pr_info("read data sample\n");
-        /* Read two data samples because pcf8591 has to settle */
-        // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-        // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-    }
+//         pr_info("read data sample\n");
+//         /* Read two data samples because pcf8591 has to settle */
+//         // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+//         // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+//     }
     
-    /*
-       Re-enable timer. Because this function will be called only first time. 
-       If we re-enable this will work like periodic timer. 
-    */
-    mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
-}
+//     /*
+//        Re-enable timer. Because this function will be called only first time. 
+//        If we re-enable this will work like periodic timer. 
+//     */
+//     mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
+// }
  
 /**
 * \brief Kernel module init function
@@ -114,11 +114,11 @@ static int __init pcf8591_init(void)
 {
     pr_info("pcf8591 init\n");
     
-    /* setup your timer to call my_timer_callback */
-    timer_setup(&etx_timer, timer_callback, 0);       //If you face some issues and using older kernel version, then you can try setup_timer API(Change Callback function's argument to unsingned long instead of struct timer_list *.
+    // /* setup your timer to call my_timer_callback */
+    // timer_setup(&etx_timer, timer_callback, 0);       //If you face some issues and using older kernel version, then you can try setup_timer API(Change Callback function's argument to unsingned long instead of struct timer_list *.
  
-    /* setup timer interval to based on TIMEOUT Macro */
-    mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
+    // /* setup timer interval to based on TIMEOUT Macro */
+    // mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
     
     int ret = -1;
 
@@ -149,7 +149,7 @@ static void __exit pcf8591_exit(void)
     
     i2c_unregister_device(s_i2c_client);
     i2c_del_driver(&s_i2c_driver);
-    del_timer(&etx_timer);
+    // del_timer(&etx_timer);
 }
  
 module_init(pcf8591_init);
