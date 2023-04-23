@@ -117,16 +117,18 @@ int thread_function(void *pv)
     {
         if (true == b_flag_i2c_probe)
         {
-            pr_info("read data sample\n");
-            
             unsigned char buf_rx_i2c[4];
             memset(&buf_rx_i2c, 0, sizeof(buf_rx_i2c));
             unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
             int ret = 0;
-            // unsigned char i;
+            unsigned char i = 0;
 
-            for (unsigned char i = 0; i < 4; i++)
-            {
+            /* Read only ch2 to get higher sample rate */
+            // for (; i < 4; i++)
+            // {
+                
+                /* Choose ch2 in control register */
+                buf_tx_i2c += 2U;
                 ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
 
                 /* Read two data samples because pcf8591 has to settle */
@@ -134,14 +136,15 @@ int thread_function(void *pv)
                 ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1);
 
                 /* Increment control register to read next channel */
-                buf_tx_i2c++;
-            }
+                // buf_tx_i2c++;
+            // }
 
-            printk("ch0=%x, ch1=%x, ch2=%x, ch3=%x\n",
-                buf_rx_i2c[0], buf_rx_i2c[1], buf_rx_i2c[2], buf_rx_i2c[3]);
+            // printk("ch0=%x, ch1=%x, ch2=%x, ch3=%x\n",
+            //     buf_rx_i2c[0], buf_rx_i2c[1], buf_rx_i2c[2], buf_rx_i2c[3]);
+            printk("pcf8591 ch2 value: 0x%x\n", buf_rx_i2c[0]);
         }
 
-        msleep(1000);
+        msleep(50);
     }
     return 0;
 }
