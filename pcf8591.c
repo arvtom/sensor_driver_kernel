@@ -38,21 +38,24 @@ MODULE_DEVICE_TABLE(i2c, s_i2c_device_id);
 /**
 * \brief Slave found callback
 */
-static int slave_found_callback(struct i2c_client *client,
+static int pcf8591_probe_callback(struct i2c_client *client,
                          const struct i2c_device_id *id)
 {
-    
+    pr_info("pcf8591 probe callback\n");
+
     unsigned char buf_rx_i2c = 0x00;
-    unsigned char buf_tx_i2c = 0xAF;
+    unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
     int ret = 0;
     
     //perhaps delay will be needed for i2c peripheral or pcf8591 to settle
     msleep(100);
 
-    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+    pr_info("config pcf control register\n");
     ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
-    
-    pr_info("OLED Probed!!!\n");
+
+    pr_info("read data sample\n");
+    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
     
     return 0;
 }
@@ -60,9 +63,9 @@ static int slave_found_callback(struct i2c_client *client,
 /**
 * \brief Slave removed callback
 */
-static int slave_removed_callback(struct i2c_client *client)
+static int pcf8591_remove_callback(struct i2c_client *client)
 {   
-    pr_info("OLED Removed!!!\n");
+    pr_info("pcf8591 remove callback\n");
     
     return 0;
 }
@@ -74,16 +77,18 @@ static struct i2c_driver s_i2c_driver =
         .name   = SLAVE_NAME,
         .owner  = THIS_MODULE,
     },
-    .probe          = slave_found_callback,
-    .remove         = slave_removed_callback,
+    .probe          = pcf8591_probe_callback,
+    .remove         = pcf8591_remove_callback,
     .id_table       = s_i2c_device_id,
 };
  
 /**
 * \brief Kernel module init function
 */
-static int __init etx_driver_init(void)
+static int __init pcf8591_init(void)
 {
+    pr_info("pcf8591 init\n");
+    
     int ret = -1;
 
     s_i2c_adapter = i2c_get_adapter(I2C_BUS);
@@ -100,8 +105,6 @@ static int __init etx_driver_init(void)
         
         i2c_put_adapter(s_i2c_adapter);
     }
-    
-    pr_info("Driver Added!!!\n");
 
     return ret;
 }
@@ -109,12 +112,13 @@ static int __init etx_driver_init(void)
 /**
 * \brief Kernel module exit function
 */
-static void __exit etx_driver_exit(void)
+static void __exit pcf8591_exit(void)
 {
+    pr_info("pcf8591 exit\n");
+    
     i2c_unregister_device(s_i2c_client);
     i2c_del_driver(&s_i2c_driver);
-    pr_info("Driver Removed!!!\n");
 }
  
-module_init(etx_driver_init);
-module_exit(etx_driver_exit);
+module_init(pcf8591_init);
+module_exit(pcf8591_exit);
