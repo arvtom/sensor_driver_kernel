@@ -14,21 +14,16 @@
 #include <linux/i2c.h>
 #include <linux/delay.h>
 #include <linux/kernel.h>
-// #include <linux/timer.h>
-// #include <linux/jiffies.h>
 #include <linux/kthread.h>             //kernel threads
 #include <linux/sched.h>               //task_struct 
 
 MODULE_LICENSE("GPL");
- 
-// #define TIMEOUT 1000    //milliseconds
+
+#define SAMPLE_PERIOD_MS    (100)
 
 #define I2C_BUS             (1)             // I2C Bus available in our Raspberry Pi
 #define SLAVE_NAME          ("pcf8591")     // Device and Driver Name
 #define SLAVE_ADDRESS       (0x48)
-
-// static struct timer_list etx_timer;
-// static unsigned int count = 0;
 
 static struct task_struct *etx_thread;
 
@@ -84,33 +79,6 @@ static struct i2c_driver s_i2c_driver =
     .id_table       = s_i2c_device_id,
 };
 
-//Timer Callback function. This will be called when timer expires
-// void timer_callback(struct timer_list * data)
-// {
-//     pr_info("Timer Callback function Called [%d]\n",count++);
-
-//     if (true == b_flag_i2c_probe)
-//     {
-//         unsigned char buf_rx_i2c = 0x00;
-//         unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
-//         int ret = 0;
-
-//         pr_info("config pcf control register\n");
-//         ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
-
-//         pr_info("read data sample\n");
-//         /* Read two data samples because pcf8591 has to settle */
-//         // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-//         // ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-//     }
-    
-//     /*
-//        Re-enable timer. Because this function will be called only first time. 
-//        If we re-enable this will work like periodic timer. 
-//     */
-//     mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
-// }
-
 int thread_function(void *pv)
 {
     while(!kthread_should_stop()) 
@@ -141,10 +109,10 @@ int thread_function(void *pv)
 
             // printk("ch0=%x, ch1=%x, ch2=%x, ch3=%x\n",
             //     buf_rx_i2c[0], buf_rx_i2c[1], buf_rx_i2c[2], buf_rx_i2c[3]);
-            printk("pcf8591 ch2 value: 0x%x\n", buf_rx_i2c[0]);
+            printk("pcf8591 value: 0x%x\n", buf_rx_i2c[0]);
         }
 
-        msleep(100);
+        msleep(SAMPLE_PERIOD_MS);
     }
     return 0;
 }
@@ -155,12 +123,6 @@ int thread_function(void *pv)
 static int __init pcf8591_init(void)
 {
     pr_info("pcf8591 init\n");
-    
-    // /* setup your timer to call my_timer_callback */
-    // timer_setup(&etx_timer, timer_callback, 0);       //If you face some issues and using older kernel version, then you can try setup_timer API(Change Callback function's argument to unsingned long instead of struct timer_list *.
- 
-    // /* setup timer interval to based on TIMEOUT Macro */
-    // mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
     
     int ret = -1;
 
