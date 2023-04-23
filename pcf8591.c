@@ -144,7 +144,7 @@ int thread_function(void *pv)
             printk("pcf8591 ch2 value: 0x%x\n", buf_rx_i2c[0]);
         }
 
-        msleep(50);
+        msleep(100);
     }
     return 0;
 }
