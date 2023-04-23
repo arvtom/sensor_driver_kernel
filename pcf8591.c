@@ -55,7 +55,15 @@ static int pcf8591_probe_callback(struct i2c_client *client,
 
     pr_info("read data sample\n");
     ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
-    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+
+    while (true)
+    {
+        ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+        //pr_info("buf_rx_i2c=%x\n, buf_rx_i2c");
+        printk("buf_rx_i2c=%x\n", buf_rx_i2c);
+
+        msleep(1000);
+    }
     
     return 0;
 }
