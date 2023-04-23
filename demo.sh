@@ -1,17 +1,14 @@
+#clear kernel logs
 sudo dmesg -C
 
-echo 'print kernel messages when pcf8591 is not yet inserted'
-sudo dmesg
-
+#insert kernel module
 sudo insmod pcf8591.ko
 
-echo 'print kernel messages when pcf8591 is inserted'
-sudo dmesg
+#pause for 5s
+read -t 5
 
-echo 'print active kernel modules containing keyword hello'
-lsmod | grep "pcf8591"
-
+#remove kernel module
 sudo rmmod pcf8591
 
-echo 'print kernel messages when pcf8591 is removed'
+#print logs
 sudo dmesg
