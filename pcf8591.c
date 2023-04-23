@@ -132,6 +132,9 @@ int thread_function(void *pv)
                 /* Read two data samples because pcf8591 has to settle */
                 ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1);
                 ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1);
+
+                /* Increment control register to read next channel */
+                buf_tx_i2c++;
             }
 
             printk("ch0=%x, ch1=%x, ch2=%x, ch3=%x\n",
