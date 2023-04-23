@@ -114,8 +114,25 @@ static struct i2c_driver s_i2c_driver =
 int thread_function(void *pv)
 {
     int i=0;
-    while(!kthread_should_stop()) {
+    while(!kthread_should_stop()) 
+    {
         pr_info("In EmbeTronicX Thread Function %d\n", i++);
+
+        if (true == b_flag_i2c_probe)
+        {
+            unsigned char buf_rx_i2c = 0x00;
+            unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
+            int ret = 0;
+
+            pr_info("config pcf control register\n");
+            ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
+
+            pr_info("read data sample\n");
+            /* Read two data samples because pcf8591 has to settle */
+            ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+            ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
+        }
+
         msleep(1000);
     }
     return 0;
