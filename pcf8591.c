@@ -16,6 +16,8 @@
 #include <linux/kernel.h>
 // #include <linux/timer.h>
 // #include <linux/jiffies.h>
+#include <linux/kthread.h>             //kernel threads
+#include <linux/sched.h>               //task_struct 
 
 MODULE_LICENSE("GPL");
  
@@ -27,6 +29,8 @@ MODULE_LICENSE("GPL");
 
 // static struct timer_list etx_timer;
 // static unsigned int count = 0;
+
+static struct task_struct *etx_thread;
 
 bool b_flag_i2c_probe = false;
 static struct i2c_adapter *s_i2c_adapter = NULL;
@@ -106,6 +110,16 @@ static struct i2c_driver s_i2c_driver =
 //     */
 //     mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
 // }
+
+int thread_function(void *pv)
+{
+    int i=0;
+    while(!kthread_should_stop()) {
+        pr_info("In EmbeTronicX Thread Function %d\n", i++);
+        msleep(1000);
+    }
+    return 0;
+}
  
 /**
 * \brief Kernel module init function
@@ -137,6 +151,16 @@ static int __init pcf8591_init(void)
         i2c_put_adapter(s_i2c_adapter);
     }
 
+    etx_thread = kthread_create(thread_function,NULL,"eTx Thread");
+    if(etx_thread) 
+    {
+        wake_up_process(etx_thread);
+    } 
+    else 
+    {
+        pr_err("Cannot create kthread\n");
+    }
+
     return ret;
 }
  
@@ -150,6 +174,7 @@ static void __exit pcf8591_exit(void)
     i2c_unregister_device(s_i2c_client);
     i2c_del_driver(&s_i2c_driver);
     // del_timer(&etx_timer);
+    kthread_stop(etx_thread);
 }
  
 module_init(pcf8591_init);
