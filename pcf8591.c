@@ -14,13 +14,20 @@
 #include <linux/i2c.h>
 #include <linux/delay.h>
 #include <linux/kernel.h>
+#include <linux/timer.h>
+#include <linux/jiffies.h>
 
 MODULE_LICENSE("GPL");
  
+#define TIMEOUT 1000    //milliseconds
+
 #define I2C_BUS             (1)             // I2C Bus available in our Raspberry Pi
 #define SLAVE_NAME          ("pcf8591")     // Device and Driver Name
 #define SLAVE_ADDRESS       (0x48)
- 
+
+static struct timer_list etx_timer;
+static unsigned int count = 0;
+
 static struct i2c_adapter *s_i2c_adapter = NULL;
 static struct i2c_client  *s_i2c_client = NULL;
 static const struct i2c_device_id s_i2c_device_id[] = 
@@ -54,16 +61,18 @@ static int pcf8591_probe_callback(struct i2c_client *client,
     ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
 
     pr_info("read data sample\n");
+    /* Read two data samples because pcf8591 has to settle */
+    ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
     ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
 
-    while (true)
+    /*while (true)
     {
         ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c, 1);
         //pr_info("buf_rx_i2c=%x\n, buf_rx_i2c");
         printk("buf_rx_i2c=%x\n", buf_rx_i2c);
 
         msleep(1000);
-    }
+    }*/
     
     return 0;
 }
@@ -89,6 +98,19 @@ static struct i2c_driver s_i2c_driver =
     .remove         = pcf8591_remove_callback,
     .id_table       = s_i2c_device_id,
 };
+
+//Timer Callback function. This will be called when timer expires
+void timer_callback(struct timer_list * data)
+{
+    /* do your timer stuff here */
+    pr_info("Timer Callback function Called [%d]\n",count++);
+    
+    /*
+       Re-enable timer. Because this function will be called only first time. 
+       If we re-enable this will work like periodic timer. 
+    */
+    mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
+}
  
 /**
 * \brief Kernel module init function
@@ -96,6 +118,12 @@ static struct i2c_driver s_i2c_driver =
 static int __init pcf8591_init(void)
 {
     pr_info("pcf8591 init\n");
+    
+    /* setup your timer to call my_timer_callback */
+    timer_setup(&etx_timer, timer_callback, 0);       //If you face some issues and using older kernel version, then you can try setup_timer API(Change Callback function's argument to unsingned long instead of struct timer_list *.
+ 
+    /* setup timer interval to based on TIMEOUT Macro */
+    mod_timer(&etx_timer, jiffies + msecs_to_jiffies(TIMEOUT));
     
     int ret = -1;
 
@@ -126,6 +154,7 @@ static void __exit pcf8591_exit(void)
     
     i2c_unregister_device(s_i2c_client);
     i2c_del_driver(&s_i2c_driver);
+    del_timer(&etx_timer);
 }
  
 module_init(pcf8591_init);
