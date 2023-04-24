@@ -1,13 +1,14 @@
 # sensor_driver_kernel
-This kernel module is written to learn basics of embedded linux. It uses RPI 4B to read extermal ADC PCF8591 using I2C. Driver logs can be observed in demo.txt, driver performance analysis in analysis.txt, ADC values in analysis.png.  
-
+This kernel module is written to learn basics of embedded linux. It uses RPI 4B to read extermal ADC PCF8591 using I2C. demo.txt contains summary. Driver logs can be observed in pcf8591.txt, driver performance analysis in analysis.txt, plot of ADC values in analysis.png.  
+  
+There is possibility to adjust driver sample rate and run time length by passing parameters to demo.sh.
+  
 Driver is tested using HW-390 Capacitive soil moisture sensor v2.0 with 3.3V power supply modification. Hand was shortly placed on sensor to simulate different ADC values.
 
 # TODO
 Error management  
 Comments  
 Description
-Increase i2c speed from 40kHz to higher  
 Analyse sample rate vs jitter  
 Mcu load  
 

@@ -8,7 +8,7 @@ period = []
 start = []
 execution_time = []
 
-with open('demo.txt') as f:
+with open('pcf8591.txt') as f:
     lines = f.readlines()
 
 value_entries = [i for i in lines if "pcf8591_value=" in i]
