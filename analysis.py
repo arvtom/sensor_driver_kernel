@@ -1,4 +1,5 @@
 import statistics
+import matplotlib.pyplot as plt
 
 value = []
 value_str = []
@@ -71,3 +72,10 @@ print("stdev_execution_time= " + str(stdev_execution_time) + " ms")
 print("mean_period= " + str(mean_period) + " ms")
 print("stdev_period= " + str(stdev_period) + " ms")
 print("requested_sample_period_error= " + str(requested_sample_period_error) + " ms")
+
+plt.plot(value)
+plt.xlabel('sample_number')
+plt.ylabel('adc_value')
+plt.grid()
+plt.savefig("analysis.png")
+# plt.show()
