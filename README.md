@@ -14,7 +14,7 @@ https://github.com/stevemar/code-reference-in-readme/blob/031e04f922c14ecd5b03a7
 
 # Results
 
-<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=https://raw.githubusercontent.com/kubernetes/kubectl/master/docs/book/examples/nginx/nginx.yaml) -->
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.txt) -->
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 https://github.com/arvtom/sensor_driver_kernel/blob/3a6965a482f113a47617b3266a98aa3107a6d81e/analysis.txt#L1
