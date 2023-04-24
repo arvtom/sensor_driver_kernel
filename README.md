@@ -4,3 +4,4 @@ Kernel module, which uses RPI 4B to read external ADC PCF8591 using I2C. Driver 
 # enable driver for 10s with 100ms sample period
 sudo bash demo.sh 10 100
 
+![alt text](https://github.com/arvtom/sensor_driver_kernel/blob/main/demo.png?raw=true)
