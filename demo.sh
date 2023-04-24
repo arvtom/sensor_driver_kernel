@@ -2,7 +2,7 @@
 sudo dmesg -C > demo.txt
 
 #insert kernel module
-sudo insmod pcf8591.ko >> demo.txt
+sudo insmod pcf8591.ko sample_period_ms=$2 >> demo.txt
 
 #pause bash script (seconds)
 read -t $1 >> demo.txt

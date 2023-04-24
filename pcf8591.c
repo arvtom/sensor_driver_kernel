@@ -19,11 +19,15 @@
 
 MODULE_LICENSE("GPL");
 
-#define SAMPLE_PERIOD_MS    (100)
+#define SAMPLE_PERIOD_MS_DEFAULT    (500)
 
-#define I2C_BUS             (1)             // I2C Bus available in our Raspberry Pi
-#define SLAVE_NAME          ("pcf8591")     // Device and Driver Name
-#define SLAVE_ADDRESS       (0x48)
+#define I2C_BUS                     (1)             // I2C Bus available in our Raspberry Pi
+#define SLAVE_NAME                  ("pcf8591")     // Device and Driver Name
+#define SLAVE_ADDRESS               (0x48)
+
+int sample_period_ms = SAMPLE_PERIOD_MS_DEFAULT;
+module_param(sample_period_ms, int, S_IRUGO);
+MODULE_PARM_DESC(sample_period_ms, "PCF8591 sample period");
 
 static struct task_struct *etx_thread;
 
@@ -114,7 +118,7 @@ int pcf8591_thread(void *pv)
             printk("pcf8591_value= 0x%x \n", buf_rx_i2c[0]);
         }
 
-        msleep(SAMPLE_PERIOD_MS);
+        msleep(sample_period_ms);
     }
     return 0;
 }
