@@ -7,5 +7,5 @@ sudo bash demo.sh 10 100
 # Results
 
 
-![alt text](https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.txt?raw=true)
+![alt text](https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.txt)
 ![alt text](https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.png?raw=true)
