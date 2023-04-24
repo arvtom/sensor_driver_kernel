@@ -1,11 +1,11 @@
 name: markdown-autodocs
 
-on:
-  workflow_run:
-    workflows:
-      - generate-artifacts
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows:
+#       - generate-artifacts
+#     types:
+#       - completed
 
 jobs:        
   auto-update-readme:
