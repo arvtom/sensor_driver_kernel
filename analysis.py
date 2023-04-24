@@ -1,7 +1,9 @@
+import statistics
 
 value = []
 value_str = []
 timestamp = []
+period = []
 
 with open('demo.txt') as f:
     lines = f.readlines()
@@ -21,9 +23,14 @@ for i in range(0, len(value_entries)):
 
     timestamp.append(temp_timestamp)
 
-print(timestamp)
-print(value)
-print(value_str)
+for i in range(1, len(timestamp)):
+    period.append(round(timestamp[i] - timestamp[i - 1], 6))
 
-# period = timestamp
-# mean_period = 
+mean_period = round(statistics.mean(period), 6)
+stdev_period = round(statistics.stdev(period), 6)
+
+# print(timestamp)
+# print(value)
+# print(value_str)
+
+print("mean_period= " + str(mean_period) + " s, stdev_period= " + str(stdev_period) + " s")
