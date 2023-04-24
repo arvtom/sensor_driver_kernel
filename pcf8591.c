@@ -79,12 +79,14 @@ static struct i2c_driver s_i2c_driver =
     .id_table       = s_i2c_device_id,
 };
 
-int thread_function(void *pv)
+int pcf8591_thread(void *pv)
 {
     while(!kthread_should_stop()) 
     {
         if (true == b_flag_i2c_probe)
         {
+            pr_info("pcf8591_thread\n");
+
             unsigned char buf_rx_i2c[4];
             memset(&buf_rx_i2c, 0, sizeof(buf_rx_i2c));
             unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
@@ -141,7 +143,7 @@ static int __init pcf8591_init(void)
         i2c_put_adapter(s_i2c_adapter);
     }
 
-    etx_thread = kthread_create(thread_function,NULL,"eTx Thread");
+    etx_thread = kthread_create(pcf8591_thread,NULL,"eTx Thread");
     if(etx_thread) 
     {
         wake_up_process(etx_thread);

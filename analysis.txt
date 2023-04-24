@@ -1,1 +1,0 @@
-mean_period= 0.108201 s, stdev_period= 0.00077 s
