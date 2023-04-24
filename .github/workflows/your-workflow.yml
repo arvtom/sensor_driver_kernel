@@ -1,5 +1,2 @@
 - name: Markdown autodocs
   uses: dineshsonachalam/markdown-autodocs@v1.0.7
-
-<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=https://raw.githubusercontent.com/kubernetes/kubectl/master/docs/book/examples/nginx/nginx.yaml) -->
-<!-- MARKDOWN-AUTO-DOCS:END -->
