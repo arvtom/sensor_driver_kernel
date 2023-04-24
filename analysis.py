@@ -54,9 +54,20 @@ stdev_execution_time = statistics.stdev(execution_time)
 stdev_execution_time *= 1000
 stdev_execution_time = round(stdev_execution_time, 6)
 
+sample_period_ms = [i for i in lines if "pcf8591 sample_period_ms" in i]
+sample_period_ms = sample_period_ms[0].split()
+sample_period_ms = sample_period_ms[-1]
+sample_period_ms = float(sample_period_ms)
+
+requested_sample_period_error = mean_period - sample_period_ms
+requested_sample_period_error = round(requested_sample_period_error, 6)
+
 # print(timestamp)
 # print(value)
 # print(value_str)
 
-print("mean_period= " + str(mean_period) + " ms, stdev_period= " + str(stdev_period) + " ms")
-print("mean_execution_time= " + str(mean_execution_time) + " ms, stdev_execution_time= " + str(stdev_execution_time) + " ms")
+print("mean_execution_time= " + str(mean_execution_time) + " ms")
+print("stdev_execution_time= " + str(stdev_execution_time) + " ms")
+print("mean_period= " + str(mean_period) + " ms")
+print("stdev_period= " + str(stdev_period) + " ms")
+print("requested_sample_period_error= " + str(requested_sample_period_error) + " ms")

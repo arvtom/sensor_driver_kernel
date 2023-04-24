@@ -1,0 +1,5 @@
+mean_execution_time= 1.656149 ms
+stdev_execution_time= 1.831543 ms
+mean_period= 108.422717 ms
+stdev_period= 1.190625 ms
+requested_sample_period_error= 8.422717 ms

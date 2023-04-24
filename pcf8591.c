@@ -52,7 +52,7 @@ MODULE_DEVICE_TABLE(i2c, s_i2c_device_id);
 static int pcf8591_probe_callback(struct i2c_client *client,
                          const struct i2c_device_id *id)
 {
-    pr_info("pcf8591 probe callback\n");
+    printk("pcf8591 probe callback");
     
     //delay is needed for i2c peripheral
     msleep(100);
@@ -66,7 +66,7 @@ static int pcf8591_probe_callback(struct i2c_client *client,
 */
 static int pcf8591_remove_callback(struct i2c_client *client)
 {   
-    pr_info("pcf8591 remove callback\n");
+    printk("pcf8591 remove callback");
     
     return 0;
 }
@@ -89,7 +89,7 @@ int pcf8591_thread(void *pv)
     {
         if (true == b_flag_i2c_probe)
         {
-            pr_info("pcf8591_thread\n");
+            printk("pcf8591_thread");
 
             unsigned char buf_rx_i2c[4];
             memset(&buf_rx_i2c, 0, sizeof(buf_rx_i2c));
@@ -128,7 +128,8 @@ int pcf8591_thread(void *pv)
 */
 static int __init pcf8591_init(void)
 {
-    pr_info("pcf8591 init\n");
+    printk("pcf8591 init");
+    printk("pcf8591 sample_period_ms= %d ", sample_period_ms);
     
     int ret = -1;
 
@@ -154,7 +155,7 @@ static int __init pcf8591_init(void)
     } 
     else 
     {
-        pr_err("Cannot create kthread\n");
+        pr_err("Cannot create kthread");
     }
 
     return ret;
@@ -165,7 +166,7 @@ static int __init pcf8591_init(void)
 */
 static void __exit pcf8591_exit(void)
 {
-    pr_info("pcf8591 exit\n");
+    printk("pcf8591 exit");
     
     i2c_unregister_device(s_i2c_client);
     i2c_del_driver(&s_i2c_driver);
