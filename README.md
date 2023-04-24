@@ -14,7 +14,7 @@ https://github.com/stevemar/code-reference-in-readme/blob/031e04f922c14ecd5b03a7
 
 # Results
 https://github.com/arvtom/sensor_driver_kernel/blob/3a6965a482f113a47617b3266a98aa3107a6d81e/analysis.txt#L1
-https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.txt#L1-L6
+https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.txt#L1
 
 
 ![alt text](https://github.com/arvtom/sensor_driver_kernel/blob/main/analysis.png?raw=true)
