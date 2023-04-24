@@ -13,7 +13,8 @@ This is a sample repo meant to show that you can reference code snippets in mark
 https://github.com/stevemar/code-reference-in-readme/blob/031e04f922c14ecd5b03a79d8c979ba8f3ab1e39/src/main.py#L1-L6
 
 # Results
-<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=analysis.txt) -->
+
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=https://raw.githubusercontent.com/kubernetes/kubectl/master/docs/book/examples/nginx/nginx.yaml) -->
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 https://github.com/arvtom/sensor_driver_kernel/blob/3a6965a482f113a47617b3266a98aa3107a6d81e/analysis.txt#L1
