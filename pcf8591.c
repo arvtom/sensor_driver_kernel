@@ -109,7 +109,7 @@ int thread_function(void *pv)
 
             // printk("ch0=%x, ch1=%x, ch2=%x, ch3=%x\n",
             //     buf_rx_i2c[0], buf_rx_i2c[1], buf_rx_i2c[2], buf_rx_i2c[3]);
-            printk("pcf8591 value: 0x%x\n", buf_rx_i2c[0]);
+            printk("pcf8591_value= 0x%x \n", buf_rx_i2c[0]);
         }
 
         msleep(SAMPLE_PERIOD_MS);
