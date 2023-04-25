@@ -61,7 +61,7 @@ sample_period_ms = sample_period_ms[-1]
 sample_period_ms = float(sample_period_ms)
 
 error_requested_sample_period = mean_period - sample_period_ms
-error_requested_sample_period = round(requested_sample_period_error, 6)
+error_requested_sample_period = round(error_requested_sample_period, 6)
 
 # print(timestamp)
 # print(value)

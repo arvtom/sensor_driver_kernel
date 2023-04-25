@@ -8,28 +8,20 @@
 */
 
 /* kernel headers can be found in /lib/modules/5.15.0-1027-raspi/build/include */
-#include <linux/module.h>
-#include <linux/init.h>
-#include <linux/slab.h>
-#include <linux/i2c.h>
-#include <linux/delay.h>
-#include <linux/kernel.h>
-#include <linux/kthread.h>             //kernel threads
-#include <linux/sched.h>               //task_struct 
 
+/*------------------------------Includes------------------------------*/
+#include "pcf8591.h"
+
+/*------------------------------Defines------------------------------*/
+
+/*------------------------------Variables / Macro calls------------------------------*/
 MODULE_LICENSE("GPL");
-
-#define SAMPLE_PERIOD_MS_DEFAULT    (500)
-
-#define I2C_BUS                     (1)             // I2C Bus available in our Raspberry Pi
-#define SLAVE_NAME                  ("pcf8591")     // Device and Driver Name
-#define SLAVE_ADDRESS               (0x48)
 
 int sample_period_ms = SAMPLE_PERIOD_MS_DEFAULT;
 module_param(sample_period_ms, int, S_IRUGO);
 MODULE_PARM_DESC(sample_period_ms, "PCF8591 sample period");
 
-static struct task_struct *etx_thread;
+static struct task_struct *s_task_struct;
 
 bool b_flag_i2c_probe = false;
 static struct i2c_adapter *s_i2c_adapter = NULL;
@@ -43,34 +35,7 @@ static struct i2c_board_info s_i2c_board_info =
 {
     I2C_BOARD_INFO(SLAVE_NAME, SLAVE_ADDRESS)
 };
-
 MODULE_DEVICE_TABLE(i2c, s_i2c_device_id);
-
-/**
-* \brief Slave found callback
-*/
-static int pcf8591_probe_callback(struct i2c_client *client,
-                         const struct i2c_device_id *id)
-{
-    printk("pcf8591 probe callback");
-    
-    //delay is needed for i2c peripheral
-    msleep(100);
-    b_flag_i2c_probe = true;
-
-    return 0;
-}
- 
-/**
-* \brief Slave removed callback
-*/
-static int pcf8591_remove_callback(struct i2c_client *client)
-{   
-    printk("pcf8591 remove callback");
-    
-    return 0;
-}
-
 static struct i2c_driver s_i2c_driver = 
 {
     .driver = 
@@ -83,6 +48,65 @@ static struct i2c_driver s_i2c_driver =
     .id_table       = s_i2c_device_id,
 };
 
+/*------------------------------Public functions------------------------------*/
+/**
+* \brief Kernel module init function
+*/
+static int __init pcf8591_init(void)
+{
+    printk("pcf8591 init");
+    printk("pcf8591 sample_period_ms= %d ", sample_period_ms);
+    
+    int ret = -1;
+
+    s_i2c_adapter = i2c_get_adapter(I2C_BUS);
+    
+    if (s_i2c_adapter != NULL)
+    {
+        s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
+        
+        if (s_i2c_client != NULL )
+        {
+            i2c_add_driver(&s_i2c_driver);
+            ret = 0;
+        }
+        
+        i2c_put_adapter(s_i2c_adapter);
+    }
+
+    s_task_struct = kthread_create(pcf8591_thread,NULL,"pcf8591_thread");
+    if(s_task_struct) 
+    {
+        wake_up_process(s_task_struct);
+    } 
+    else 
+    {
+        printk("pcf8591 error create thread");
+    }
+
+    return ret;
+}
+ 
+/**
+* \brief Kernel module exit function
+*/
+static void __exit pcf8591_exit(void)
+{
+    printk("pcf8591 exit");
+    
+    i2c_unregister_device(s_i2c_client);
+    i2c_del_driver(&s_i2c_driver);
+    kthread_stop(s_task_struct);
+}
+ 
+module_init(pcf8591_init);
+module_exit(pcf8591_exit);
+
+/*------------------------------Private functions------------------------------*/
+
+/**
+* \brief Periodic tasks of driver
+*/
 int pcf8591_thread(void *pv)
 {
     while(!kthread_should_stop()) 
@@ -124,55 +148,25 @@ int pcf8591_thread(void *pv)
 }
  
 /**
-* \brief Kernel module init function
+* \brief Slave found callback
 */
-static int __init pcf8591_init(void)
+static int pcf8591_probe_callback(struct i2c_client *client, const struct i2c_device_id *id)
 {
-    printk("pcf8591 init");
-    printk("pcf8591 sample_period_ms= %d ", sample_period_ms);
+    printk("pcf8591 probe callback");
     
-    int ret = -1;
+    //delay is needed for i2c peripheral
+    msleep(100);
+    b_flag_i2c_probe = true;
 
-    s_i2c_adapter = i2c_get_adapter(I2C_BUS);
-    
-    if (s_i2c_adapter != NULL)
-    {
-        s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
-        
-        if (s_i2c_client != NULL )
-        {
-            i2c_add_driver(&s_i2c_driver);
-            ret = 0;
-        }
-        
-        i2c_put_adapter(s_i2c_adapter);
-    }
-
-    etx_thread = kthread_create(pcf8591_thread,NULL,"eTx Thread");
-    if(etx_thread) 
-    {
-        wake_up_process(etx_thread);
-    } 
-    else 
-    {
-        pr_err("Cannot create kthread");
-    }
-
-    return ret;
+    return 0;
 }
  
 /**
-* \brief Kernel module exit function
+* \brief Slave removed callback
 */
-static void __exit pcf8591_exit(void)
-{
-    printk("pcf8591 exit");
+static int pcf8591_remove_callback(struct i2c_client *client)
+{   
+    printk("pcf8591 remove callback");
     
-    i2c_unregister_device(s_i2c_client);
-    i2c_del_driver(&s_i2c_driver);
-    // del_timer(&etx_timer);
-    kthread_stop(etx_thread);
+    return 0;
 }
- 
-module_init(pcf8591_init);
-module_exit(pcf8591_exit);
