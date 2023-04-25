@@ -1,8 +1,8 @@
 python analysis result
  
-mean_execution_time= 3.047667 ms
-stdev_execution_time= 3.607933 ms
-mean_period= 410.4665 ms
-stdev_period= 7.049148 ms
-error_requested_sample_period= 10.4665 ms
+mean_execution_time= 1.331064 ms
+stdev_execution_time= 0.3789 ms
+mean_period= 108.09 ms
+stdev_period= 0.674529 ms
+error_requested_sample_period= 8.09 ms
  

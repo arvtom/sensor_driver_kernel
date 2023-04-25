@@ -1,22 +1,14 @@
-# MODULE_NAME = pcf8591
-# SRC_FILES = pcf8591.c
-# # error_manager.c
-# KERNEL_HEADERS = /lib/modules/$(shell uname -r)/build/include
-# CCFLAGS = -I$(KERNEL_HEADERS)
-# $(MODULE_NAME).ko: $(SRC_FILES)
-# all:
-# 	make -C /lib/modules/$(shell uname -r )/build M=$(PWD) modules
+# Disable forcing to declare variables at the beggining of function.
+# It was enabled, because C90 is used by default.
+ccflags-y := -Wno-declaration-after-statement
+#ccflags-y += -std=gnu99
 
-# clean:
-# 	make -C /lib/modules/$(shell uname -r )/build M=$(PWD) clean
-
-ccflags-y := -std=gnu99 -Wno-declaration-after-statement
+#what to build
 obj-m := pcf8591_module.o
-#pcf8591-y := $(src)/pcf8591.o
-#$(src)/pcf8591.o := $(src)/pcf8591.h
+
+#add additional source files
 pcf8591_module-objs := error_manager.o pcf8591.o
-INC=-I/usr/include
-PWD:=$(shell pwd)
+
 all:
 	make -C /lib/modules/$(shell uname -r )/build M=$(PWD) modules
 
