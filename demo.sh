@@ -22,6 +22,12 @@ printf "max_i2c_clock= %d Hz\n" $((16#$max_i2c_clock)) >> demo.txt
 #insert kernel module
 sudo insmod pcf8591_module.ko sample_period_ms=$2 >> demo.txt
 
+#check return of insmod
+if [ $? -ne 0 ]
+then
+    exit
+fi
+
 #pause bash script (seconds)
 read -t $1 >> demo.txt
 

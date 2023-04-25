@@ -59,7 +59,7 @@ static int __init pcf8591_init(void)
     printk("pcf8591 init");
     printk("pcf8591 sample_period_ms= %d ", sample_period_ms);
     
-    int ret = -1;
+    int ret = 0;
 
     s_i2c_adapter = i2c_get_adapter(I2C_BUS);
     if (NULL == s_i2c_adapter)
@@ -69,6 +69,9 @@ static int __init pcf8591_init(void)
     else
     {
         printk("err= 0x%x", error_manager_check_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
+        // pcf8591_exit();
+        ret = 0;
+        return ret;
     }
 
     if (s_i2c_adapter != NULL)
