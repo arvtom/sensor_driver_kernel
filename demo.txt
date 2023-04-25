@@ -4,8 +4,36 @@ max_i2c_clock= 100000 Hz
  
 pcf8591 driver result
  
-[13558.617836] pcf8591: unknown parameter 'sample_period_ms' ignored
+[ 1408.250598] pcf8591 init
+[ 1408.250613] pcf8591 sample_period_ms= 100 
+[ 1408.250875] pcf8591 probe callback
+[ 1408.366372] pcf8591_thread
+[ 1408.369214] pcf8591_value= 0xe3 
+[ 1408.473330] pcf8591_thread
+[ 1408.474352] pcf8591_value= 0xd6 
+[ 1408.581396] pcf8591_thread
+[ 1408.582647] pcf8591_value= 0xd5 
+[ 1408.689432] pcf8591_thread
+[ 1408.690132] pcf8591_value= 0xd5 
+[ 1408.797546] pcf8591_thread
+[ 1408.799199] pcf8591_value= 0xd5 
+[ 1408.905554] pcf8591_thread
+[ 1408.906806] pcf8591_value= 0xd5 
+[ 1409.013503] pcf8591_thread
+[ 1409.015223] pcf8591_value= 0xd5 
+[ 1409.125495] pcf8591_thread
+[ 1409.126198] pcf8591_value= 0xd5 
+[ 1409.237541] pcf8591_thread
+[ 1409.239044] pcf8591_value= 0xd5 
+[ 1409.345595] pcf8591_thread
+[ 1409.347137] pcf8591_value= 0xd5 
+[ 1409.424000] pcf8591 exit
  
 python analysis result
  
+mean_execution_time= 1.4188 ms
+stdev_execution_time= 0.617865 ms
+mean_period= 108.658111 ms
+stdev_period= 2.192462 ms
+error_requested_sample_period= 8.658111 ms
  
