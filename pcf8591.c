@@ -73,16 +73,20 @@ static int __init pcf8591_init(void)
         error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_CLIENT);
     }
 
-    i2c_add_driver(&s_i2c_driver);
+    if (0 != i2c_add_driver(&s_i2c_driver))
+    {
+        error_manager_set_u32(&err, PCF8591_ERROR_ADD_DRIVER);
+    }
+
     i2c_put_adapter(s_i2c_adapter);
 
-    s_task_struct = kthread_create(pcf8591_thread,NULL,"pcf8591_thread");
-    if(NULL == s_task_struct)
+    s_task_struct = kthread_create(pcf8591_thread, NULL, "pcf8591_thread");
+    if (NULL == s_task_struct)
     {
         error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_TASK);
     } 
 
-    if(1 != wake_up_process(s_task_struct))
+    if (1 != wake_up_process(s_task_struct))
     {
         error_manager_set_u32(&err, PCF8591_ERROR_WAKE_UP);
     }

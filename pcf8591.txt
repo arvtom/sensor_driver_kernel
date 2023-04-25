@@ -1,29 +1,27 @@
 pcf8591 driver result
  
-[ 1259.665256] pcf8591 remove callback
-[ 1302.418102] pcf8591 init
-[ 1302.418140] pcf8591 sample_period_ms= 100 
-[ 1302.418156] err= 0x1
-[ 1302.419337] pcf8591 probe callback
-[ 1302.528170] pcf8591_thread
-[ 1302.537759] pcf8591_value= 0xd4 
-[ 1302.642498] pcf8591_thread
-[ 1302.643715] pcf8591_value= 0xd4 
-[ 1302.750560] pcf8591_thread
-[ 1302.752062] pcf8591_value= 0xd4 
-[ 1302.862511] pcf8591_thread
-[ 1302.863734] pcf8591_value= 0xd4 
-[ 1302.974500] pcf8591_thread
-[ 1302.975195] pcf8591_value= 0xd4 
-[ 1303.082531] pcf8591_thread
-[ 1303.084238] pcf8591_value= 0xd4 
-[ 1303.190536] pcf8591_thread
-[ 1303.192218] pcf8591_value= 0xd4 
-[ 1303.298571] pcf8591_thread
-[ 1303.300280] pcf8591_value= 0xd4 
-[ 1303.406541] pcf8591_thread
-[ 1303.407758] pcf8591_value= 0xd4 
-[ 1303.514535] pcf8591_thread
-[ 1303.516027] pcf8591_value= 0xd4 
-[ 1303.580214] pcf8591 exit
+[ 1893.314130] pcf8591 init
+[ 1893.314151] pcf8591 sample_period_ms= 100 
+[ 1893.314464] pcf8591 probe callback
+[ 1893.424183] pcf8591_thread
+[ 1893.425704] pcf8591_value= 0xd4 
+[ 1893.531608] pcf8591_thread
+[ 1893.533091] pcf8591_value= 0xd4 
+[ 1893.639594] pcf8591_thread
+[ 1893.640308] pcf8591_value= 0xd4 
+[ 1893.747641] pcf8591_thread
+[ 1893.749124] pcf8591_value= 0xd4 
+[ 1893.855689] pcf8591_thread
+[ 1893.857383] pcf8591_value= 0xd4 
+[ 1893.963606] pcf8591_thread
+[ 1893.965282] pcf8591_value= 0xd4 
+[ 1894.071594] pcf8591_thread
+[ 1894.073268] pcf8591_value= 0xd4 
+[ 1894.183589] pcf8591_thread
+[ 1894.184278] pcf8591_value= 0xd4 
+[ 1894.295601] pcf8591_thread
+[ 1894.296268] pcf8591_value= 0xd4 
+[ 1894.403620] pcf8591_thread
+[ 1894.405099] pcf8591_value= 0xd4 
+[ 1894.483497] pcf8591 exit
  
