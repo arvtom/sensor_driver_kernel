@@ -139,11 +139,10 @@ int pcf8591_thread(void *pv)
         {
             printk("pcf8591_thread");
 
-            unsigned char buf_rx_i2c[4];
+            uint8_t buf_rx_i2c[4];
             memset(&buf_rx_i2c, 0, sizeof(buf_rx_i2c));
-            unsigned char buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
-            int ret = 0;
-            unsigned char i = 0;
+            uint8_t buf_tx_i2c = 0b01000000; /* PCF8591 control register value. ADC enabled, four single ended channels. */
+            uint8_t i = 0;
 
             /* Read only ch2 to get higher sample rate */
             // for (; i < 4; i++)
@@ -151,11 +150,22 @@ int pcf8591_thread(void *pv)
                 
                 /* Choose ch2 in control register */
                 buf_tx_i2c += 2U;
-                ret = i2c_master_send(s_i2c_client, &buf_tx_i2c, 1);
+
+                if (1 != i2c_master_send(s_i2c_client, &buf_tx_i2c, 1))
+                {
+                    error_manager_set_u32(&err, PCF8591_ERROR_SEND);
+                }
 
                 /* Read two data samples because pcf8591 has to settle */
-                ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1);
-                ret = i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1);
+                if (1 != i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1))
+                {
+                    error_manager_set_u32(&err, PCF8591_ERROR_RECEIVE_1);
+                }
+
+                if (1 != i2c_master_recv(s_i2c_client, &buf_rx_i2c[i], 1))
+                {
+                    error_manager_set_u32(&err, PCF8591_ERROR_RECEIVE_2);
+                }
 
                 /* Increment control register to read next channel */
                 // buf_tx_i2c++;
