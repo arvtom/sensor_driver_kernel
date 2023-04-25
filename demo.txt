@@ -5,59 +5,36 @@ max_i2c_clock= 100000 Hz
  
 pcf8591 driver result
  
-[  114.809281] pcf8591 remove callback
-[  343.221998] pcf8591 init
-[  343.222026] pcf8591 sample_period_ms= 100 
-[  343.222039] err= 0x0
-[  344.280556] pcf8591 exit
-[  344.280581] Unable to handle kernel access to user memory outside uaccess routines at virtual address 0000000000000000
-[  344.280593] Mem abort info:
-[  344.280598]   ESR = 0x0000000096000004
-[  344.280603]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  344.280609]   SET = 0, FnV = 0
-[  344.280728]   EA = 0, S1PTW = 0
-[  344.280736]   FSC = 0x04: level 0 translation fault
-[  344.280741] Data abort info:
-[  344.280745]   ISV = 0, ISS = 0x00000004
-[  344.280750]   CM = 0, WnR = 0
-[  344.280756] user pgtable: 4k pages, 48-bit VAs, pgdp=00000001d78a3000
-[  344.280763] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-[  344.280780] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-[  344.280786] Modules linked in: pcf8591_module(OE-) rfcomm cmac algif_hash aes_arm64 algif_skcipher af_alg hci_uart btqca btrtl btbcm btintel bnep ip6t_REJECT nf_reject_ipv6 binfmt_misc xt_hl ip6_tables ip6t_rt ipt_REJECT nf_reject_ipv4 xt_LOG nf_log_syslog nft_limit xt_limit xt_addrtype xt_tcpudp xt_conntrack nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nft_compat nft_counter nf_tables nfnetlink joydev input_leds btsdio bluetooth vc4 ecdh_generic ecc snd_soc_hdmi_codec bcm2835_codec(CE) bcm2835_isp(CE) bcm2835_v4l2(CE) snd_bcm2835(CE) brcmfmac snd_soc_core v4l2_mem2mem snd_seq_midi bcm2835_mmal_vchiq(CE) videobuf2_dma_contig videobuf2_vmalloc snd_seq_midi_event brcmutil videobuf2_memops snd_compress videobuf2_v4l2 ac97_bus snd_rawmidi videobuf2_common snd_pcm_dmaengine snd_pcm snd_seq cfg80211 videodev drm_kms_helper v3d mc cec crct10dif_ce snd_seq_device fb_sys_fops syscopyarea raspberrypi_hwmon gpu_sched snd_timer sysfillrect vc_sm_cma(CE) sysimgblt snd bcm2835_gpiomem rpivid_mem
-[  344.280939]  uio_pdrv_genirq uio nvmem_rmem sch_fq_codel drm ramoops pstore_blk reed_solomon pstore_zone ip_tables x_tables autofs4 hid_logitech_hidpp btrfs blake2b_generic xor xor_neon zstd_compress hid_logitech_dj hid_generic usbhid raid6_pq libcrc32c dm_mirror dm_region_hash dm_log spidev dwc2 i2c_brcmstb roles udc_core i2c_bcm2835 spi_bcm2835 xhci_pci xhci_pci_renesas phy_generic [last unloaded: pcf8591_module]
-[  344.281009] CPU: 2 PID: 8199 Comm: rmmod Tainted: G         C OE     5.15.0-1027-raspi #29-Ubuntu
-[  344.281016] Hardware name: Raspberry Pi 4 Model B Rev 1.4 (DT)
-[  344.281020] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  344.281026] pc : i2c_do_del_adapter+0x28/0x110
-[  344.281039] lr : __process_removed_driver+0x44/0x54
-[  344.281044] sp : ffff80000b4abc70
-[  344.281047] x29: ffff80000b4abc70 x28: ffff544c4873bf00 x27: 0000000000000000
-[  344.281056] x26: 0000000000000000 x25: 0000000000000000 x24: ffffd5f531b76188
-[  344.281064] x23: 0000000000000000 x22: ffffd5f56e189e60 x21: ffffd5f56d24c800
-[  344.281071] x20: fffffffffffffd20 x19: ffffd5f531b760a8 x18: 0000000000000000
-[  344.281080] x17: 0000000000000000 x16: ffffd5f56d24c3d0 x15: 0000000000000000
-[  344.281087] x14: 0000000000000001 x13: 0000000000000030 x12: 0101010101010101
-[  344.281094] x11: 7f7f7f7f7f7f7f7f x10: fefefefefefefeff x9 : ffffd5f56d24c844
-[  344.281102] x8 : ffff80000b4abd50 x7 : 0000000000000001 x6 : 0000000000000001
-[  344.281109] x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffff544c46ca8108
-[  344.281116] x2 : ffffd5f56e2ac6b0 x1 : ffff544c46ca8098 x0 : 0000000000000000
-[  344.281123] Call trace:
-[  344.281126]  i2c_do_del_adapter+0x28/0x110
-[  344.281132]  __process_removed_driver+0x44/0x54
-[  344.281137]  bus_for_each_dev+0x78/0xd0
-[  344.281143]  i2c_del_driver+0x4c/0xa4
-[  344.281148]  pcf8591_exit+0x3c/0xe10 [pcf8591_module]
-[  344.281160]  __do_sys_delete_module.constprop.0+0x178/0x2d0
-[  344.281169]  __arm64_sys_delete_module+0x1c/0x30
-[  344.281175]  invoke_syscall+0x50/0x120
-[  344.281182]  el0_svc_common.constprop.0+0x6c/0x1a0
-[  344.281188]  do_el0_svc+0x30/0xb0
-[  344.281194]  el0_svc+0x4c/0x170
-[  344.281199]  el0t_64_sync_handler+0xa4/0x12c
-[  344.281203]  el0t_64_sync+0x1a4/0x1a8
-[  344.281211] Code: aa0003f8 a90153f3 f84e0f00 d10b8014 (f9417293) 
-[  344.281217] ---[ end trace c0bd9ff7804bfb2f ]---
+[  987.157266] pcf8591 init
+[  987.157283] pcf8591 sample_period_ms= 100 
+[  987.157555] pcf8591 probe callback
+[  987.262246] pcf8591_thread
+[  987.263161] pcf8591_value= 0xd4 
+[  987.369908] pcf8591_thread
+[  987.371575] pcf8591_value= 0xd4 
+[  987.477919] pcf8591_thread
+[  987.479595] pcf8591_value= 0xd4 
+[  987.585882] pcf8591_thread
+[  987.587560] pcf8591_value= 0xd4 
+[  987.693856] pcf8591_thread
+[  987.694530] pcf8591_value= 0xd4 
+[  987.801933] pcf8591_thread
+[  987.803598] pcf8591_value= 0xd4 
+[  987.909906] pcf8591_thread
+[  987.911579] pcf8591_value= 0xd4 
+[  988.017902] pcf8591_thread
+[  988.019773] pcf8591_value= 0xd4 
+[  988.125905] pcf8591_thread
+[  988.127564] pcf8591_value= 0xd4 
+[  988.233917] pcf8591_thread
+[  988.235276] pcf8591_value= 0xd4 
+[  988.316044] pcf8591 exit
  
 python analysis result
  
+mean_execution_time= 1.4837 ms
+stdev_execution_time= 0.387635 ms
+mean_period= 108.012778 ms
+stdev_period= 0.563216 ms
+error_requested_sample_period= 8.012778 ms
  

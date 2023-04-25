@@ -65,33 +65,30 @@ static int __init pcf8591_init(void)
     if (NULL == s_i2c_adapter)
     {
         error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER);
-    }
-    else
-    {
-        printk("err= 0x%x", error_manager_check_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
+        printk("err= 0x%x", err);
     }
 
-    if (s_i2c_adapter != NULL)
+    s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
+    if (NULL == s_i2c_client)
     {
-        s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
-        
-        if (s_i2c_client != NULL )
-        {
-            i2c_add_driver(&s_i2c_driver);
-            ret = 0;
-        }
-        
-        i2c_put_adapter(s_i2c_adapter);
+        error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_CLIENT);
+        printk("err= 0x%x", err);
     }
+
+    i2c_add_driver(&s_i2c_driver);
+    i2c_put_adapter(s_i2c_adapter);
 
     s_task_struct = kthread_create(pcf8591_thread,NULL,"pcf8591_thread");
-    if(s_task_struct) 
+    if(NULL == s_task_struct)
     {
-        wake_up_process(s_task_struct);
+        error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_TASK);
+        printk("err= 0x%x", err);
     } 
-    else 
+
+    if(1 != wake_up_process(s_task_struct))
     {
-        printk("pcf8591 error create thread");
+        error_manager_set_u32(&err, PCF8591_ERROR_WAKE_UP);
+        printk("err= 0x%x", err);
     }
 
     return ret;
