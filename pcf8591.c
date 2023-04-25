@@ -62,14 +62,14 @@ static int __init pcf8591_init(void)
     int ret = -1;
 
     s_i2c_adapter = i2c_get_adapter(I2C_BUS);
-    // if (NULL == s_i2c_adapter)
-    // {
-    //     error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER);
-    // }
-    // else
-    // {
-    //     printk("err= 0x%x", error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
-    // }
+    if (NULL == s_i2c_adapter)
+    {
+        error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER);
+    }
+    else
+    {
+        printk("err= 0x%x", error_manager_check_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
+    }
 
     if (s_i2c_adapter != NULL)
     {

@@ -1,13 +1,14 @@
 pcf8591 driver result
  
-[ 4997.393336] pcf8591 init
-[ 4997.393371] pcf8591 sample_period_ms= 400 
-[ 4997.393867] pcf8591 probe callback
-[ 4997.500162] pcf8591_thread
-[ 4997.502639] pcf8591_value= 0xd4 
-[ 4997.919392] pcf8591_thread
-[ 4997.921067] pcf8591_value= 0xd4 
-[ 4998.335304] pcf8591_thread
-[ 4998.336014] pcf8591_value= 0xd4 
-[ 4998.570183] pcf8591 exit
+[ 5520.264952] pcf8591 init
+[ 5520.265007] pcf8591 sample_period_ms= 400 
+[ 5520.265035] err= 0x0
+[ 5520.272518] pcf8591 probe callback
+[ 5520.384737] pcf8591_thread
+[ 5520.391940] pcf8591_value= 0xd4 
+[ 5520.796193] pcf8591_thread
+[ 5520.797422] pcf8591_value= 0xd4 
+[ 5521.212162] pcf8591_thread
+[ 5521.212873] pcf8591_value= 0xd4 
+[ 5521.449962] pcf8591 exit
  

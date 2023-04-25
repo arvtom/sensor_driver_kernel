@@ -15,13 +15,13 @@ max_i2c_clock=$(xxd /sys/class/i2c-adapter/i2c-1/of_node/clock-frequency | awk -
 printf "max_i2c_clock= %d Hz\n" $((16#$max_i2c_clock)) >> demo.txt
 
 #insert kernel module
-sudo insmod pcf8591.ko sample_period_ms=$2 >> demo.txt
+sudo insmod pcf8591_module.ko sample_period_ms=$2 >> demo.txt
 
 #pause bash script (seconds)
 read -t $1 >> demo.txt
 
 #remove kernel module
-sudo rmmod pcf8591 >> demo.txt
+sudo rmmod pcf8591_module >> demo.txt
 
 #save driver logs
 sudo dmesg >> pcf8591.txt
