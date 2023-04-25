@@ -6,11 +6,11 @@ There is possibility to adjust driver sample rate and run time length by passing
 Driver is tested using HW-390 Capacitive soil moisture sensor v2.0 with 3.3V power supply modification. Hand was shortly placed on sensor to simulate different ADC values.
 
 # TODO
-*Driver error management  
-*Driver comments  
-*Project description  
-*Analyse effect of sample rate on sample rate jitter, execution time jitter, error of requested sample rate  
-*Measure MCU load during driver runtime  
+* Driver error management  
+* Driver comments  
+* Project description  
+* Analyse effect of sample rate on sample rate jitter, execution time jitter, error of requested sample rate  
+* Measure MCU load during driver runtime  
 
 # To enable driver for 10s with 100ms sample period
 ```bash
