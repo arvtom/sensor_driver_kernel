@@ -1,5 +1,5 @@
 # sensor_driver_kernel
-This kernel module is written to learn basics of embedded linux. It uses RPI 4B (Broadcom BCM2835 MCU) to read extermal 8bit ADC PCF8591 using I2C. It was chosen to read only one channel (ch2), to have higher sample rate. Result summary can be found in demo.txt. Driver logs can be observed in pcf8591.txt, driver performance analysis in analysis.txt, plot of ADC values in analysis.png.  
+This kernel module is written to learn basics of embedded linux. It uses RPI 4B (Broadcom BCM2835 MCU) to read external 8bit ADC PCF8591 using I2C. It was chosen to read only one channel (ch2), to have higher sample rate. Result summary can be found in demo.txt. Driver logs can be observed in pcf8591.txt, driver performance analysis in analysis.txt, plot of ADC values in analysis.png.  
   
 There is possibility to adjust driver sample rate and run time length by passing parameters to demo.sh. Clock speed for i2c was increased to 100 kHz by modifying CONFIG_I2C_BCM2708_BAUDRATE value in /boot/config-5.15.0-1027-raspi.  
   

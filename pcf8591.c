@@ -15,6 +15,8 @@
 /*------------------------------Defines------------------------------*/
 
 /*------------------------------Variables / Macro calls------------------------------*/
+pcf8591_error_t err = 0U;
+
 MODULE_LICENSE("GPL");
 
 int sample_period_ms = SAMPLE_PERIOD_MS_DEFAULT;
@@ -60,7 +62,11 @@ static int __init pcf8591_init(void)
     int ret = -1;
 
     s_i2c_adapter = i2c_get_adapter(I2C_BUS);
-    
+    if (NULL == s_i2c_adapter)
+    {
+        error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER);
+    }
+
     if (s_i2c_adapter != NULL)
     {
         s_i2c_client = i2c_new_client_device(s_i2c_adapter, &s_i2c_board_info);
@@ -103,7 +109,6 @@ module_init(pcf8591_init);
 module_exit(pcf8591_exit);
 
 /*------------------------------Private functions------------------------------*/
-
 /**
 * \brief Periodic tasks of driver
 */

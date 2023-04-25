@@ -18,6 +18,8 @@
 #include <linux/kernel.h>
 #include <linux/kthread.h>             //kernel threads
 #include <linux/sched.h>               //task_struct 
+#include "types.h"
+#include "error_manager.h"
 
 /*------------------------------Defines------------------------------*/
 #define SAMPLE_PERIOD_MS_DEFAULT    (500)
@@ -25,6 +27,46 @@
 #define I2C_BUS                     (1)             // I2C Bus available in our Raspberry Pi
 #define SLAVE_NAME                  ("pcf8591")     // Device and Driver Name
 #define SLAVE_ADDRESS               (0x48)
+
+/*------------------------------Structures / enumerators------------------------------*/
+
+
+/* 64bit error enumerator */
+typedef enum
+{
+    PCF8591_ERROR_NULL_PTR_ADAPTER          = 0x00000001U,
+    PCF8591_ERROR_BIT                       = 0x00000002U,
+    // PCF8591_ERROR_BIT = 0x00000004U,
+    // PCF8591_ERROR_BIT = 0x00000008U,
+    // PCF8591_ERROR_BIT = 0x00000010U,
+    // PCF8591_ERROR_BIT = 0x00000020U,
+    // PCF8591_ERROR_BIT = 0x00000040U,
+    // PCF8591_ERROR_BIT = 0x00000080U,
+    // PCF8591_ERROR_BIT = 0x00000100U,
+    // PCF8591_ERROR_BIT = 0x00000200U,
+    // PCF8591_ERROR_BIT = 0x00000400U,
+    // PCF8591_ERROR_BIT = 0x00000800U,
+    // PCF8591_ERROR_BIT = 0x00001000U,
+    // PCF8591_ERROR_BIT = 0x00002000U,
+    // PCF8591_ERROR_BIT = 0x00004000U,
+    // PCF8591_ERROR_BIT = 0x00008000U,
+    // PCF8591_ERROR_BIT = 0x00010000U,
+    // PCF8591_ERROR_BIT = 0x00020000U,
+    // PCF8591_ERROR_BIT = 0x00040000U,
+    // PCF8591_ERROR_BIT = 0x00080000U,
+    // PCF8591_ERROR_BIT = 0x00100000U,
+    // PCF8591_ERROR_BIT = 0x00200000U,
+    // PCF8591_ERROR_BIT = 0x00400000U,
+    // PCF8591_ERROR_BIT = 0x00800000U,
+    // PCF8591_ERROR_BIT = 0x01000000U,
+    // PCF8591_ERROR_BIT = 0x02000000U,
+    // PCF8591_ERROR_BIT = 0x04000000U,
+    // PCF8591_ERROR_BIT = 0x08000000U,
+    // PCF8591_ERROR_BIT = 0x10000000U,
+    // PCF8591_ERROR_BIT = 0x20000000U,
+    // PCF8591_ERROR_BIT = 0x40000000U,
+    // PCF8591_ERROR_BIT = 0x80000000U,
+}pcf8591_error_t;
 
 /*------------------------------Public function prototypes------------------------------*/
 static int __init pcf8591_init(void);
