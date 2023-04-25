@@ -12,6 +12,8 @@
 /*------------------------------Variables / Macro calls------------------------------*/
 MODULE_LICENSE("GPL");
 
+extern uint32_t err;
+
 /*------------------------------Public functions------------------------------*/
 /**
 * \brief Set requested error bit in error variable
@@ -19,6 +21,8 @@ MODULE_LICENSE("GPL");
 void error_manager_set_u32(uint32_t *p_err_var, uint32_t err_bit)
 {
     *p_err_var |= err_bit;
+
+    printk("err= 0x%x", err);
 }
 
 /**
