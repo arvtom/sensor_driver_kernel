@@ -50,6 +50,9 @@ static struct i2c_driver s_i2c_driver =
     .id_table       = s_i2c_device_id,
 };
 
+module_init(pcf8591_init);
+module_exit(pcf8591_exit);
+
 /*------------------------------Public functions------------------------------*/
 /**
 * \brief Kernel module init function
@@ -57,10 +60,13 @@ static struct i2c_driver s_i2c_driver =
 static int __init pcf8591_init(void)
 {
     printk("pcf8591 init");
+
+    /* Print input parameter of kernel module */
     printk("pcf8591 sample_period_ms= %d ", sample_period_ms);
     
     int ret = 0;
 
+    /* Init i2c */
     s_i2c_adapter = i2c_get_adapter(I2C_BUS);
     if (NULL == s_i2c_adapter)
     {
@@ -80,6 +86,7 @@ static int __init pcf8591_init(void)
 
     i2c_put_adapter(s_i2c_adapter);
 
+    /* Init thread */
     s_task_struct = kthread_create(pcf8591_thread, NULL, "pcf8591_thread");
     if (NULL == s_task_struct)
     {
@@ -91,6 +98,8 @@ static int __init pcf8591_init(void)
         error_manager_set_u32(&err, PCF8591_ERROR_WAKE_UP);
     }
 
+    /* Return is set to 0 and never changed. In the future it should 
+        indicate errors together with error_manager_set_u32() */
     return ret;
 }
  
@@ -101,6 +110,7 @@ static void __exit pcf8591_exit(void)
 {
     printk("pcf8591 exit");
     
+    /* Deinit i2c */
     if (NULL != s_i2c_client)
     {
         i2c_unregister_device(s_i2c_client);
@@ -108,14 +118,12 @@ static void __exit pcf8591_exit(void)
 
     i2c_del_driver(&s_i2c_driver);
 
+    /* Deinit thread */
     if (NULL != s_task_struct)
     {
         kthread_stop(s_task_struct);
     }
 }
- 
-module_init(pcf8591_init);
-module_exit(pcf8591_exit);
 
 /*------------------------------Private functions------------------------------*/
 /**
@@ -123,8 +131,10 @@ module_exit(pcf8591_exit);
 */
 int pcf8591_thread(void *pv)
 {
+    /* Check if thread should be running, or module exit was already called */
     while(!kthread_should_stop()) 
     {
+        /* Check if slave was found */
         if (true == b_flag_i2c_probe)
         {
             printk("pcf8591_thread");
@@ -156,8 +166,12 @@ int pcf8591_thread(void *pv)
             printk("pcf8591_value= 0x%x \n", buf_rx_i2c[0]);
         }
 
+        /* Allow other kernel modules to run */
         msleep(sample_period_ms);
     }
+
+    /* Return is set to 0 and never changed. In the future it should 
+        indicate errors together with error_manager_set_u32() */
     return 0;
 }
  
@@ -168,10 +182,14 @@ static int pcf8591_probe_callback(struct i2c_client *client, const struct i2c_de
 {
     printk("pcf8591 probe callback");
     
-    //delay is needed for i2c peripheral
+    /* Delay is needed for i2c peripheral to settle */
     msleep(100);
+
+    /* Allow for thread to run */
     b_flag_i2c_probe = true;
 
+    /* Return is set to 0 and never changed. In the future it should 
+        indicate errors together with error_manager_set_u32() */
     return 0;
 }
  
@@ -182,5 +200,7 @@ static int pcf8591_remove_callback(struct i2c_client *client)
 {   
     printk("pcf8591 remove callback");
     
+    /* Return is set to 0 and never changed. In the future it should 
+        indicate errors together with error_manager_set_u32() */
     return 0;
 }
