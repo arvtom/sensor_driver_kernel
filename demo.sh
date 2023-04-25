@@ -12,7 +12,7 @@ echo " " >> analysis.txt
 sudo dmesg -C >> demo.txt
 
 max_i2c_clock=$(xxd /sys/class/i2c-adapter/i2c-1/of_node/clock-frequency | awk -F' ' '{print $2$3}')
-printf "max_i2c_clock= %d\n" $((16#$max_i2c_clock)) >> demo.txt
+printf "max_i2c_clock= %d Hz\n" $((16#$max_i2c_clock)) >> demo.txt
 
 #insert kernel module
 sudo insmod pcf8591.ko sample_period_ms=$2 >> demo.txt

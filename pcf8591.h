@@ -27,7 +27,8 @@
 #define SLAVE_ADDRESS               (0x48)
 
 /*------------------------------Public function prototypes------------------------------*/
-
+static int __init pcf8591_init(void);
+static void __exit pcf8591_exit(void);
 
 /*------------------------------Private function prototypes------------------------------*/
 int pcf8591_thread(void *pv);

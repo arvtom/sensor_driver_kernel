@@ -1,114 +1,114 @@
 bash script result
  
-max_i2c_clock= 100000
+max_i2c_clock= 100000 Hz
  
 pcf8591 driver result
  
-[ 4990.440430] pcf8591 remove callback
-[ 5027.629195] pcf8591 init
-[ 5027.629210] pcf8591 sample_period_ms= 100 
-[ 5027.629425] pcf8591 probe callback
-[ 5027.734786] pcf8591_thread
-[ 5027.737846] pcf8591_value= 0xd8 
-[ 5027.842439] pcf8591_thread
-[ 5027.844110] pcf8591_value= 0xd8 
-[ 5027.950597] pcf8591_thread
-[ 5027.952275] pcf8591_value= 0xd8 
-[ 5028.058701] pcf8591_thread
-[ 5028.059388] pcf8591_value= 0xd8 
-[ 5028.166797] pcf8591_thread
-[ 5028.167653] pcf8591_value= 0xd8 
-[ 5028.274957] pcf8591_thread
-[ 5028.276445] pcf8591_value= 0xd8 
-[ 5028.383087] pcf8591_thread
-[ 5028.384758] pcf8591_value= 0xd8 
-[ 5028.491210] pcf8591_thread
-[ 5028.492877] pcf8591_value= 0xd8 
-[ 5028.599340] pcf8591_thread
-[ 5028.600678] pcf8591_value= 0xd8 
-[ 5028.707454] pcf8591_thread
-[ 5028.708136] pcf8591_value= 0xd8 
-[ 5028.815609] pcf8591_thread
-[ 5028.817282] pcf8591_value= 0xd8 
-[ 5028.923722] pcf8591_thread
-[ 5028.925394] pcf8591_value= 0xd8 
-[ 5029.031857] pcf8591_thread
-[ 5029.033530] pcf8591_value= 0xd8 
-[ 5029.139997] pcf8591_thread
-[ 5029.141674] pcf8591_value= 0xd8 
-[ 5029.248123] pcf8591_thread
-[ 5029.249877] pcf8591_value= 0xd8 
-[ 5029.360235] pcf8591_thread
-[ 5029.361718] pcf8591_value= 0xd8 
-[ 5029.472360] pcf8591_thread
-[ 5029.473840] pcf8591_value= 0xd8 
-[ 5029.580508] pcf8591_thread
-[ 5029.582186] pcf8591_value= 0xd8 
-[ 5029.688647] pcf8591_thread
-[ 5029.690317] pcf8591_value= 0xd8 
-[ 5029.796753] pcf8591_thread
-[ 5029.798429] pcf8591_value= 0xd8 
-[ 5029.904888] pcf8591_thread
-[ 5029.906451] pcf8591_value= 0xd8 
-[ 5030.013009] pcf8591_thread
-[ 5030.014682] pcf8591_value= 0xd8 
-[ 5030.121129] pcf8591_thread
-[ 5030.122828] pcf8591_value= 0xd8 
-[ 5030.229261] pcf8591_thread
-[ 5030.230934] pcf8591_value= 0xd8 
-[ 5030.337390] pcf8591_thread
-[ 5030.338115] pcf8591_value= 0xd8 
-[ 5030.445495] pcf8591_thread
-[ 5030.446384] pcf8591_value= 0xd8 
-[ 5030.557676] pcf8591_thread
-[ 5030.559352] pcf8591_value= 0xd8 
-[ 5030.669809] pcf8591_thread
-[ 5030.671475] pcf8591_value= 0xd8 
-[ 5030.777880] pcf8591_thread
-[ 5030.779352] pcf8591_value= 0xd8 
-[ 5030.886013] pcf8591_thread
-[ 5030.887488] pcf8591_value= 0xd8 
-[ 5030.994270] pcf8591_thread
-[ 5030.996058] pcf8591_value= 0xd8 
-[ 5031.102284] pcf8591_thread
-[ 5031.103973] pcf8591_value= 0xd8 
-[ 5031.210372] pcf8591_thread
-[ 5031.211699] pcf8591_value= 0xd8 
-[ 5031.318495] pcf8591_thread
-[ 5031.319973] pcf8591_value= 0xd8 
-[ 5031.426605] pcf8591_thread
-[ 5031.427820] pcf8591_value= 0xd8 
-[ 5031.534733] pcf8591_thread
-[ 5031.535945] pcf8591_value= 0xd8 
-[ 5031.642861] pcf8591_thread
-[ 5031.644537] pcf8591_value= 0xd8 
-[ 5031.750974] pcf8591_thread
-[ 5031.752461] pcf8591_value= 0xd8 
-[ 5031.859112] pcf8591_thread
-[ 5031.860788] pcf8591_value= 0xd8 
-[ 5031.967232] pcf8591_thread
-[ 5031.968907] pcf8591_value= 0xd8 
-[ 5032.075341] pcf8591_thread
-[ 5032.076829] pcf8591_value= 0xd8 
-[ 5032.183462] pcf8591_thread
-[ 5032.185143] pcf8591_value= 0xd8 
-[ 5032.291582] pcf8591_thread
-[ 5032.293066] pcf8591_value= 0xd8 
-[ 5032.399708] pcf8591_thread
-[ 5032.401384] pcf8591_value= 0xd8 
-[ 5032.507816] pcf8591_thread
-[ 5032.508848] pcf8591_value= 0xd8 
-[ 5032.615923] pcf8591_thread
-[ 5032.616719] pcf8591_value= 0xd8 
-[ 5032.724026] pcf8591_thread
-[ 5032.725146] pcf8591_value= 0xd8 
-[ 5032.795346] pcf8591 exit
+[ 5198.867105] pcf8591 remove callback
+[ 5232.638901] pcf8591 init
+[ 5232.638956] pcf8591 sample_period_ms= 100 
+[ 5232.639180] pcf8591 probe callback
+[ 5232.747091] pcf8591_thread
+[ 5232.759320] pcf8591_value= 0xd8 
+[ 5232.865802] pcf8591_thread
+[ 5232.867467] pcf8591_value= 0xd8 
+[ 5232.973303] pcf8591_thread
+[ 5232.974522] pcf8591_value= 0xd8 
+[ 5233.080868] pcf8591_thread
+[ 5233.082544] pcf8591_value= 0xd8 
+[ 5233.188009] pcf8591_thread
+[ 5233.189123] pcf8591_value= 0xd8 
+[ 5233.295451] pcf8591_thread
+[ 5233.296933] pcf8591_value= 0xd8 
+[ 5233.402932] pcf8591_thread
+[ 5233.404638] pcf8591_value= 0xd8 
+[ 5233.510486] pcf8591_thread
+[ 5233.512162] pcf8591_value= 0xd8 
+[ 5233.617751] pcf8591_thread
+[ 5233.618655] pcf8591_value= 0xd8 
+[ 5233.729138] pcf8591_thread
+[ 5233.729821] pcf8591_value= 0xd8 
+[ 5233.836645] pcf8591_thread
+[ 5233.838323] pcf8591_value= 0xd8 
+[ 5233.944142] pcf8591_thread
+[ 5233.945386] pcf8591_value= 0xd8 
+[ 5234.051504] pcf8591_thread
+[ 5234.052720] pcf8591_value= 0xd8 
+[ 5234.159119] pcf8591_thread
+[ 5234.160794] pcf8591_value= 0xd8 
+[ 5234.266655] pcf8591_thread
+[ 5234.268320] pcf8591_value= 0xd8 
+[ 5234.374004] pcf8591_thread
+[ 5234.375680] pcf8591_value= 0xd8 
+[ 5234.481532] pcf8591_thread
+[ 5234.483210] pcf8591_value= 0xd8 
+[ 5234.589190] pcf8591_thread
+[ 5234.590867] pcf8591_value= 0xd8 
+[ 5234.696308] pcf8591_thread
+[ 5234.697977] pcf8591_value= 0xd8 
+[ 5234.803962] pcf8591_thread
+[ 5234.805452] pcf8591_value= 0xd8 
+[ 5234.915257] pcf8591_thread
+[ 5234.916499] pcf8591_value= 0xd8 
+[ 5235.022749] pcf8591_thread
+[ 5235.024412] pcf8591_value= 0xd8 
+[ 5235.130425] pcf8591_thread
+[ 5235.132030] pcf8591_value= 0xd8 
+[ 5235.237704] pcf8591_thread
+[ 5235.239359] pcf8591_value= 0xd8 
+[ 5235.345192] pcf8591_thread
+[ 5235.346665] pcf8591_value= 0xd8 
+[ 5235.452733] pcf8591_thread
+[ 5235.454060] pcf8591_value= 0xd8 
+[ 5235.560184] pcf8591_thread
+[ 5235.561854] pcf8591_value= 0xd8 
+[ 5235.667849] pcf8591_thread
+[ 5235.669516] pcf8591_value= 0xd8 
+[ 5235.775180] pcf8591_thread
+[ 5235.776132] pcf8591_value= 0xd8 
+[ 5235.882733] pcf8591_thread
+[ 5235.883622] pcf8591_value= 0xd8 
+[ 5235.990216] pcf8591_thread
+[ 5235.991173] pcf8591_value= 0xd8 
+[ 5236.097764] pcf8591_thread
+[ 5236.099482] pcf8591_value= 0xd8 
+[ 5236.205393] pcf8591_thread
+[ 5236.207067] pcf8591_value= 0xd8 
+[ 5236.312835] pcf8591_thread
+[ 5236.314317] pcf8591_value= 0xd8 
+[ 5236.420484] pcf8591_thread
+[ 5236.422145] pcf8591_value= 0xd8 
+[ 5236.527808] pcf8591_thread
+[ 5236.529162] pcf8591_value= 0xd8 
+[ 5236.635651] pcf8591_thread
+[ 5236.636986] pcf8591_value= 0xd8 
+[ 5236.742863] pcf8591_thread
+[ 5236.744350] pcf8591_value= 0xd8 
+[ 5236.850529] pcf8591_thread
+[ 5236.852204] pcf8591_value= 0xd8 
+[ 5236.958107] pcf8591_thread
+[ 5236.959792] pcf8591_value= 0xd8 
+[ 5237.065748] pcf8591_thread
+[ 5237.067424] pcf8591_value= 0xd8 
+[ 5237.173081] pcf8591_thread
+[ 5237.174565] pcf8591_value= 0xd8 
+[ 5237.280850] pcf8591_thread
+[ 5237.282516] pcf8591_value= 0xd8 
+[ 5237.388296] pcf8591_thread
+[ 5237.389972] pcf8591_value= 0xd8 
+[ 5237.495680] pcf8591_thread
+[ 5237.497358] pcf8591_value= 0xd8 
+[ 5237.603232] pcf8591_thread
+[ 5237.604902] pcf8591_value= 0xd8 
+[ 5237.710837] pcf8591_thread
+[ 5237.712509] pcf8591_value= 0xd8 
+[ 5237.787103] pcf8591 exit
  
 python analysis result
  
-mean_execution_time= 1.494574 ms
-stdev_execution_time= 0.391916 ms
-mean_period= 108.419565 ms
-stdev_period= 1.285931 ms
-error_requested_sample_period= 8.419565 ms
+mean_execution_time= 1.71734 ms
+stdev_execution_time= 1.589462 ms
+mean_period= 107.678022 ms
+stdev_period= 0.844097 ms
+error_requested_sample_period= 7.678022 ms
  
