@@ -8,6 +8,7 @@ Driver is tested using HW-390 Capacitive soil moisture sensor v2.0 with 3.3V pow
 # TODO
 * Driver error management  
 * Driver comments  
+* Find method how to return error from init function, but still to have printk working.
 * Find method how to have multiple returns when error is detected in init function. Currently kernel gives such error: "demo.sh: line 35:  8197 Segmentation fault      (core dumped) sudo rmmod pcf8591_module >> demo.txt"
 * Bash script to kill driver and it's dependencies, in case driver returned without proper deinit.  
 * Project description  

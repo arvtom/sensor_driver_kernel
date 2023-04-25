@@ -69,9 +69,6 @@ static int __init pcf8591_init(void)
     else
     {
         printk("err= 0x%x", error_manager_check_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
-        // pcf8591_exit();
-        ret = 0;
-        return ret;
     }
 
     if (s_i2c_adapter != NULL)
