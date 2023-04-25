@@ -19,7 +19,7 @@ pcf8591_error_t err = 0U;
 
 MODULE_LICENSE("GPL");
 
-int sample_period_ms = SAMPLE_PERIOD_MS_DEFAULT;
+int sample_period_ms = 500;
 module_param(sample_period_ms, int, S_IRUGO);
 MODULE_PARM_DESC(sample_period_ms, "PCF8591 sample period");
 
@@ -65,6 +65,10 @@ static int __init pcf8591_init(void)
     if (NULL == s_i2c_adapter)
     {
         error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER);
+    }
+    else
+    {
+        printk("err= 0x%x", error_manager_set_u32(&err, PCF8591_ERROR_NULL_PTR_ADAPTER));
     }
 
     if (s_i2c_adapter != NULL)

@@ -18,7 +18,6 @@
 #include <linux/kernel.h>
 #include <linux/kthread.h>             //kernel threads
 #include <linux/sched.h>               //task_struct 
-#include "types.h"
 #include "error_manager.h"
 
 /*------------------------------Defines------------------------------*/
