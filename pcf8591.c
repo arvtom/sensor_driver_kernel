@@ -101,9 +101,17 @@ static void __exit pcf8591_exit(void)
 {
     printk("pcf8591 exit");
     
-    i2c_unregister_device(s_i2c_client);
+    if (NULL != s_i2c_client)
+    {
+        i2c_unregister_device(s_i2c_client);
+    }
+
     i2c_del_driver(&s_i2c_driver);
-    kthread_stop(s_task_struct);
+
+    if (NULL != s_task_struct)
+    {
+        kthread_stop(s_task_struct);
+    }
 }
  
 module_init(pcf8591_init);
