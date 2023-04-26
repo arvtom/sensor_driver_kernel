@@ -14,13 +14,13 @@ Driver is tested using HW-390 Capacitive soil moisture sensor v2.0 with 3.3V pow
 * Analyse effect of sample rate on sample rate jitter, execution time jitter, error of requested sample rate  
 * Measure MCU load during driver runtime  
 * Explore differences of embedded linux vs bare metal: 
-** MMU capabilities to help with stack overflow, memory leaks, memory fragmentation
-** Decoupled architecture: hardware, kernel, shell, apps
-** Network stack
-** Common devices driver support
-** Security (encription)
-** Filesystem and database
-** Threads
+  * MMU capabilities to help with stack overflow, memory leaks, memory fragmentation
+  * Decoupled architecture: hardware, kernel, shell, apps
+  * Network stack
+  * Common devices driver support
+  * Security (encription)
+  * Filesystem and database
+  * Threads
 
 # To enable driver for 10s with 100ms sample period
 ```bash
