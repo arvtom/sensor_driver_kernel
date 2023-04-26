@@ -22,7 +22,10 @@ Driver is tested using HW-390 Capacitive soil moisture sensor v2.0 with 3.3V pow
   * Common devices driver support
   * Security (encription)
   * Filesystem and database
-  * Threads
+  * Data flow between different drivers. Threads, mutexes, semaphores, workqueues
+* Learn to build linux distro from scratch, so that dependencies are already installed
+  * buildroot
+  * yocto
 
 # To enable driver for 10s with 100ms sample period
 ```bash
